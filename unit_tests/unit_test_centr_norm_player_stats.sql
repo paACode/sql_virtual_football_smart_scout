@@ -1,3 +1,4 @@
+USE palest_dbm_project;
 -- Search for top strikers,
 -- Expect Cristiano Ronaldo, Harry Kane, Erling Haaland and othe top strikes amongst the players
 -- -> Result looks good, it also includes players from lower leagues but as a scout you also want to see those players
@@ -5,7 +6,7 @@ SELECT
 	n.athleteId,
     p.firstName , 
     p.lastName, 
-    p.positionName,
+    p.positionId,
     (n.normalized_appearances * 20) + (n.normalized_shotsOnTarget* 20) + (n.normalized_totalGoals * 60) AS player_score,
     s.total_appearances,
 	s.total_subIns,
@@ -37,7 +38,7 @@ SELECT
 	n.athleteId,
     p.firstName , 
     p.lastName, 
-    p.positionName,
+    p.positionId,
     (n.normalized_saves * 33) + (n.normalized_goalsConceded * -34) + (n.normalized_appearances * 33) AS player_score,
     s.total_appearances,
 	s.total_subIns,

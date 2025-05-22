@@ -1,3 +1,4 @@
+USE palest_dbm_project;
 DROP VIEW IF EXISTS view_unique_player_stat_values;
 
 CREATE VIEW view_unique_player_stat_values AS
@@ -16,7 +17,7 @@ FROM (
             PARTITION BY ps.athleteID, ps.league , ps.year
             ORDER BY ps.timestamp DESC
         ) AS rank_within_group
-    FROM player_stats ps
+    FROM player_stats as ps
 ) AS ranked_stats
 WHERE rank_within_group = 1; -- Take the upper most in group, if identified by max(date) the issue is that there can still be duplicate entries
 

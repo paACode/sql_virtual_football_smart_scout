@@ -1,4 +1,4 @@
-
+USE palest_dbm_project;
 DROP VIEW IF EXISTS view_summed_player_stat_values;
 CREATE VIEW view_summed_player_stat_values AS
 SELECT

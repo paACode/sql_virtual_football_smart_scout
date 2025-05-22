@@ -1,3 +1,4 @@
+USE palest_dbm_project;
 -- Expect Sums 31, 2, 26, 18
 SELECT * FROM view_unique_player_stat_values
 WHERE athleteID = 6327;

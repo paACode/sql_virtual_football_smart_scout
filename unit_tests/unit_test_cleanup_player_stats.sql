@@ -1,3 +1,4 @@
+USE palest_dbm_project;
 -- First load the sql script cleanup_player_stats.sql to load the test view 
 -- Select any player which has 20 stats available, can be checked easily
 SELECT 

@@ -1,5 +1,4 @@
 USE palest_dbm_project;
-
 DROP VIEW IF EXISTS view_normalized_player_stat_values;
 CREATE VIEW view_normalized_player_stat_values AS
 WITH stat_keyfigures AS (
