@@ -6,7 +6,6 @@ SELECT
     MIN(value_clean) AS min_value
 FROM transfer_value;
 
-
 -- Filter Athlete Ids by Budget
 SELECT 
 	t.athleteId
@@ -28,6 +27,7 @@ SET @stat3 = 'normalized_totalGoals';
 SET @weight_stat3 = 60;
 SET @budget = NULL;
 SET @position = NULL;
+SET @table_length = 20;
 
 -- Build the dynamic SQL query string
 SET @sql = CONCAT('
@@ -70,16 +70,21 @@ LEFT JOIN position_data AS pd
 	ON p.positionId = pd.positionId
 WHERE (', 
 	 -- Budget filter: if @budget is NULL, accept all players;
-    -- If @budget is set, include only players with a value_clean less than the budget,
-    -- or those with no value_clean (could be transfer candidates with unknown value)
-    IF(@budget IS NULL, '1=1', CONCAT('(tv.value_clean < ', @budget, ' OR tv.value_clean IS NULL)')), ')
+    -- else filter only player which have a value below budget
+    IF(@budget IS NULL, '1=1', CONCAT('tv.value_clean < ', @budget)), ')
 AND (',
 	-- Position filter: if @position is NULL, accept all positions;
     -- else filter only players with the exact position name matching @position
     IF(@position IS NULL , '1=1', CONCAT('pd.positionName = \'', @position, '\'')), ')
 ORDER BY player_score DESC
-LIMIT 20;
+LIMIT ', @table_length, ';
 ');
+
+-- Prepare and execute
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
 
 -- Prepare and execute
 PREPARE stmt FROM @sql;
@@ -90,7 +95,7 @@ DEALLOCATE PREPARE stmt;
 -- Eric Haaland : 200 Mio
 -- So Eric Haaland  should disappear
 
--- Works : Eric Haaland is not in the list anymre, there is also no midfielder anymore , Christiano Ronaldo is still in there because we do not know how much he costs
+-- Works : Eric Haaland is not in the list anymre, there is also no midfielder anymore , We now also see players with a value
 SET @stat1 = 'normalized_appearances';
 SET @weight_stat1 = 20;
 SET @stat2 = 'normalized_shotsOnTarget';
@@ -99,7 +104,7 @@ SET @stat3 = 'normalized_totalGoals';
 SET @weight_stat3 = 60;
 SET @budget = 100000000;
 SET @position = 'Forward';
-
+SET @table_length = 20;
 
 -- Build the dynamic SQL query string
 SET @sql = CONCAT('
@@ -142,18 +147,18 @@ LEFT JOIN position_data AS pd
 	ON p.positionId = pd.positionId
 WHERE (', 
 	 -- Budget filter: if @budget is NULL, accept all players;
-    -- If @budget is set, include only players with a value_clean less than the budget,
-    -- or those with no value_clean (could be transfer candidates with unknown value)
-    IF(@budget IS NULL, '1=1', CONCAT('(tv.value_clean < ', @budget, ' OR tv.value_clean IS NULL)')), ')
+    -- else filter only player which have a value below budget
+    IF(@budget IS NULL, '1=1', CONCAT('tv.value_clean < ', @budget)), ')
 AND (',
 	-- Position filter: if @position is NULL, accept all positions;
     -- else filter only players with the exact position name matching @position
     IF(@position IS NULL , '1=1', CONCAT('pd.positionName = \'', @position, '\'')), ')
 ORDER BY player_score DESC
-LIMIT 20;
+LIMIT ', @table_length, ';
 ');
 
 -- Prepare and execute
 PREPARE stmt FROM @sql;
 EXECUTE stmt;
 DEALLOCATE PREPARE stmt;
+
