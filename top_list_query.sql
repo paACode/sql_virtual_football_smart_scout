@@ -1,3 +1,5 @@
+USE palest_dbm_project;
+
 -- Set Filters here
 SET @stat1 = 'normalized_appearances';
 SET @weight_stat1 = 20;
