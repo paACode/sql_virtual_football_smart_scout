@@ -1,4 +1,4 @@
-USE palest_dbm_project;
+USE football_smart_scout;
 
 -- Set Filters here
 SET @stat1 = 'normalized_appearances';
@@ -40,10 +40,10 @@ SELECT
     s.total_saves,
     s.total_goalsConceded,
     tv.value_clean
-FROM view_normalized_player_stat_values AS n
+FROM mat_view_normalized_player_stat_values AS n
 INNER JOIN base_data_players AS p
     ON n.athleteID = p.athleteID
-INNER JOIN view_summed_player_stat_values AS s
+INNER JOIN mat_view_summed_player_stat_values AS s
     ON n.athleteID = s.athleteID
 LEFT JOIN transfer AS t
     ON n.athleteID = t.athleteID

@@ -1,4 +1,4 @@
-USE palest_dbm_project;
+USE football_smart_scout;
 
 SET @athleteId = 158626;
 
