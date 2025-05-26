@@ -19,11 +19,13 @@ SELECT * FROM palest_dbm_project.view_summed_player_stat_values;
 /* For Top List the following Tables are needed:
 1. transfer--> to filter by budget and join values in top list
 2. tranfer_value --> to filter by budget and join values in top list
-3. base_data_player --> to join base information about player*/
+3. base_data_player --> to join base information about player$
+4. position_data --> to join positionname*/
 
 CREATE TABLE transfer AS SELECT * FROM palest_dbm_project.transfer;
 CREATE TABLE transfer_value AS SELECT * FROM palest_dbm_project.transfer_value;
 CREATE TABLE base_data_players AS SELECT * FROM palest_dbm_project.base_data_players;
+CREATE TABLE position_data AS SELECT * FROM palest_dbm_project.position_data;
 
 -- For the heatmap the player_action_coordinates table is needed
 
